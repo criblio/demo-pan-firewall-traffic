@@ -1,6 +1,6 @@
 # demo-pan-firewall-traffic
 
-This is the apache-logs pack that's used in the cribl-demo environment. It has been moved here to facilitate install via git repo and eliminate a build step.
+This is the pan-firewall-traffic  pack that's used in the cribl-demo environment. It has been moved here to facilitate install via git repo and eliminate a build step.
 
 # Why is this not in the Cribl Dispensary
 
