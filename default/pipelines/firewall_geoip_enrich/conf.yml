@@ -142,6 +142,18 @@ functions:
           extraOutField: dest_geoip
     description: Lookup GEOIP of Src and Dest IP address
     groupId: 2vbLEq
+  - id: geoip
+    filter: src_ip || dest_ip
+    disabled: null
+    conf:
+      inField: dest_ip
+      outField: dest_asn
+      file: GeoLite2-ASN.mmdb
+      additionalFields:
+        - extraInField: src_ip
+          extraOutField: src_asn
+    groupId: 2vbLEq
+    description: Lookup ASN and Owner Org for dest_ip
   - id: eval
     filter: "true"
     disabled: false
@@ -167,12 +179,14 @@ functions:
     groupId: 2vbLEq
     description: Clean Up extraneous GeoIP fields
   - id: flatten
-    filter: src_geoip || dest_geoip
+    filter: src_geoip || dest_geoip || src_asn || dest_asn
     disabled: false
     conf:
       fields:
         - src_geoip
         - dest_geoip
+        - src_asn
+        - dest_asn
       prefix: ""
       depth: 5
       delimiter: _
@@ -257,19 +271,3 @@ functions:
       dstField: _raw
       cleanFields: false
     description: Turn on to show reserialization into _raw
-groups:
-  gB4TB7:
-    name: Extraction and Reduction
-    description: Eliminate data that shouldn't be here and extract fields.
-    index: 0
-    disabled: false
-  2vbLEq:
-    name: GeoIP
-    description: GeoIP Enrichment
-    index: 1
-    disabled: false
-  Icop75:
-    name: DNS and Local LAN Lookup
-    index: 2
-    disabled: false
-    description: Enrich with DNS and "Local LAN" data
